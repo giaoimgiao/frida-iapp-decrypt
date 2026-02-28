@@ -119,6 +119,54 @@ A:
 | 实时调试 | 困难 | 方便 |
 | 兼容性 | 依赖 Xposed 版本 | 依赖 Frida 版本 |
 
+## License Key System
+
+This project also includes a hash-based license key verification system.
+
+### How It Works
+
+```
+Developer (keygen.py)         User (verify.html)
+       |                              |
+  secret + id                    enter key
+       |                              |
+  HMAC-SHA256                     SHA-256
+       |                              |
+  formatted key ──── give to ───> key input
+       |                              |
+  SHA-256 hash ──── embed in ───> VALID_HASHES
+       |                              |
+                                  compare
+                                    |
+                              match? → unlock
+                          no match? → "Get Key" → QQ Group
+```
+
+### Generate Keys
+
+```bash
+python keygen.py -n 5              # Generate 5 keys
+python keygen.py -i "QQ:123456"    # Generate key for specific user
+python keygen.py --list             # List all generated keys
+python keygen.py --export           # Export hashes for verify.html
+python keygen.py -v XXXX-XXXX-...  # Verify a key
+```
+
+### Integrate Verification Page
+
+1. Generate keys: `python keygen.py -n 10`
+2. Export hashes: `python keygen.py --export`
+3. Paste the hash array into `verify.html` (replace `VALID_HASHES`)
+4. Set your QQ group link in `GROUP_URL`
+5. Deploy `verify.html` as your app's entry page
+
+### Security Notes
+
+- Only SHA-256 hashes are stored in the frontend, not actual keys
+- Keys cannot be reverse-engineered from hashes
+- `keys.json` and `keygen.py` should be kept PRIVATE
+- The `SECRET` in `keygen.py` should be changed to your own
+
 ## 免责声明
 
 本工具仅供安全研究和学习用途。请勿用于非法目的。使用本工具所产生的一切后果由使用者自行承担。

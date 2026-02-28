@@ -1,0 +1,27 @@
+# Output
+output/
+*.apk
+*.so
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Frida binaries
+frida-server*
+libfrida-gadget*
